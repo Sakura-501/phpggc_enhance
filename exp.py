@@ -104,7 +104,8 @@ class EXP:
     def find_path(self,res):
         text = res.text
         # 正则表达式模式
-        pattern = r'"([^"]+?)/vendor'
+        # pattern = r'"([^"]+?)/vendor'
+        pattern = r'Supported methods: POST. in file ([^"]+?)/vendor'
 
         # 使用正则表达式搜索
         match = re.search(pattern, text)
