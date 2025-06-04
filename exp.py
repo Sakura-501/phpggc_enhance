@@ -118,7 +118,7 @@ class EXP:
 
     def get_attempt(self):
         res = requests.get(self.__url, verify=False, timeout=5)
-        return res.text
+        return res
 
 
     def __init__(self, target):
